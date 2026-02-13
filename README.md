@@ -1,134 +1,142 @@
-🚀 Terraform Multi-Environment AWS Infrastructure
-A modular Infrastructure as Code (IaC) project built using Terraform to provision and manage AWS resources across Development, Staging, and Production environments.
-This project demonstrates reusable Terraform modules, environment-based configurations, and full infrastructure lifecycle management.
+# 🛠 Terraform Multi-Environment AWS Infrastructure
 
-📌 Overview
-This project provisions and manages AWS infrastructure using Terraform with:
+This repository contains a **Terraform-based Infrastructure as Code (IaC)** project that provisions AWS resources across **Development, Staging, and Production** environments using reusable modules and environment-specific configurations.
 
-✅ EC2 Instances (environment-specific scaling)
+---
 
-✅ Security Groups
+## 🚀 Project Overview
 
-✅ Default VPC integration
+This project demonstrates how to build, manage, and tear down AWS infrastructure using **Terraform (HCL)** with:
 
-✅ S3 Buckets
+✔ Modular Terraform code  
+✔ Environment-specific resource configurations  
+✔ Reusable modules for EC2 provisioning  
+✔ Automated lifecycle management with Terraform CLI
 
-✅ DynamoDB Tables
+It includes common AWS components like EC2, Security Groups, S3, DynamoDB, and environment-level scaling.
 
-✅ Modular and reusable Terraform architecture
+---
 
-The infrastructure can be created, modified, and destroyed entirely using Terraform CLI commands.
+## 🏗 Architecture
 
-🏗 Architecture Design
-The infrastructure is divided into three isolated environments:
+The infrastructure is organized into **three environments**:
 
-🔹 Development (Dev)
+| Environment | Instance Type | Count |
+|-------------|----------------|-------|
+| Development | t2.micro       | 1     |
+| Staging     | t2.medium      | 1     |
+| Production  | t2.large       | 3     |
 
-1 EC2 Instance (t2.micro)
+All environments leverage the **same reusable EC2 module** with different variable values.
 
-Lightweight configuration for testing and experimentation
+You can view the overall architecture in the `architecture.png` image included in this repository.
 
-🔹 Staging
+---
 
-1 EC2 Instance (t2.medium)
+## 📂 Repository Structure
 
-Pre-production validation environment
-
-🔹 Production (Prod)
-
-3 EC2 Instances (scalable configuration)
-
-Production-grade environment setup
-
-Each environment reuses the same Terraform module with different variable inputs.
-
-📂 Project Structure
-
-.
+Terraform-Multi-Environment-AWS-Infrastructure/
 ├── main.tf
 ├── variables.tf
-├── outputs.tf
 ├── terraform.tfvars
+├── outputs.tf
+├── architecture.png
 └── aws_modules/
-    ├── my_instance.tf
-    ├── my_variables.tf
-    └── outputs.tf
-Root Module → Handles environment configuration
-Child Module → Reusable EC2 provisioning logic
+├── my_instance.tf
+├── my_variables.tf
+├── outputs.tf
 
-🛠 Tech Stack
-Terraform
-AWS (EC2, S3, DynamoDB, VPC, Security Groups)
-HashiCorp Configuration Language (HCL)
-AWS CLI
 
-⚙️ Prerequisites
-Before running this project, ensure:
-Terraform installedterraform --version
 
-AWS CLI configured
-aws configure
+- **main.tf** → Root environment definitions  
+- **variables.tf** → Input variable declarations  
+- **terraform.tfvars** → Environment-specific inputs  
+- **outputs.tf** → Output definitions  
+- **aws_modules/** → Reusable module for EC2 provisioning  
+- **architecture.png** → Visual diagram of architecture
 
-AWS account with required IAM permissions
+---
 
-🚀 Deployment Steps
+## 🧰 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Terraform  | Infrastructure as Code |
+| AWS        | Cloud Provider |
+| HCL        | Configuration Language |
+| AWS CLI    | AWS credential & configuration |
+
+---
+
+## ⚙️ Prerequisites
+
+Before running the Terraform scripts, you should:
+
+1. **Install Terraform**
+   ```bash
+   terraform --version
+2. **Install AWS CLI**
+   ```bash
+   aws --version
+3. **Configure AWS Credentials**
+   ```bash
+   aws configure
+
+📌 How to Deploy
+Use the following sequence of Terraform commands:
+
 1️⃣ Initialize Terraform
-terraform init
 
-2️⃣ Review Execution Plan
-terraform plan
+    terraform init
+2️⃣ Review the Execution Plan
+    
+    terraform plan
+3️⃣ Apply the Terraform Configuration
 
-3️⃣ Apply Infrastructure
-terraform apply
+    terraform apply
+4️⃣ View Output Values
+    
+    terraform output
+5️⃣ Destroy the Infrastructure
+    
+    terraform destroy
 
-4️⃣ Destroy Infrastructure
-terraform destroy
+📤 Important Outputs
+After successful deployment, the outputs will display the details of created resources such as:
 
-⚠️ Always review the execution plan before applying or destroying resources.
+✔ Public IP of EC2 instances
+✔ Resource IDs
+✔ Other environment-specific outputs
 
-📤 Outputs
-To view provisioned resource details:
-terraform output
+You can view them with:
 
-Example outputs:
-EC2 Public IP Addresses
-Resource IDs
-Environment-specific values
+    terraform output
 
-📦 State Management
-Terraform maintains a terraform.tfstate file to track infrastructure resources.
+🔒 State Management
+Terraform stores its current state in a local file (terraform.tfstate). For team collaboration, consider using remote state storage in an S3 bucket with DynamoDB state locking.
 
-Recommended Improvement:
-Store state remotely in S3
-Enable state locking using DynamoDB
+💡 Key Learnings
 
-This prevents state corruption and supports team collaboration.
+During this project, you will explore:
 
-💡 Key Concepts Implemented
-Terraform Modules for reusability
-Environment-based configuration (Dev, Staging, Prod)
-Variable-driven infrastructure
-Resource referencing best practices
-Infrastructure lifecycle management
-Targeted resource operations (-target flag)
+Provisioning AWS infrastructure using Terraform modules
 
-🧠 Learning Outcome
-This project strengthened my understanding of:
-Infrastructure as Code principles
-Terraform module isolation and variable passing
-AWS networking basics
-State management
-Multi-environment infrastructure design
-Infrastructure can be recreated instantly using code — demonstrating the true power of IaC.
+Managing environments with variable overrides
 
-🔮 Future Enhancements
-Remote backend (S3 + DynamoDB locking)
-Load Balancer integration
-Auto Scaling Groups
-CI/CD integration
-Custom VPC module implementation
+EC2, Security Group, and IAM integration
 
-👨‍💻 Author
+Terraform workflow commands and state management
+
+Clean infrastructure organization using reusable modules
+
+
+📌 Author
 
 Saif Anas
-DevOps Engineer | AWS | Terraform | CI/CD | Cloud Enthusiast
+DevOps Engineer | AWS & Terraform Practitioner
+
+If you have any questions or suggestions, feel free to open an issue or connect with me!
+
+
+
+
